@@ -1,7 +1,45 @@
-const express = require("express");
-
+const express = require('express');
+//import express from "express";
+//require("./src/config/databse");
 const app = express();
+const connectionDB = require('./src/config/databse');
+const User = require('./src/config/models/user');
 
+
+
+
+app.post("/signup", async(req,res)=>{const user = new User( {firstName : "ansukha",
+    lastName:"dubey",
+    emailID:"anu@gmail.com",
+    password :"123445575690",}
+);await user.save();
+res.send("useer added susucessfully")
+
+
+})
+
+//Creating a new instance of the User model 
+
+  
+  
+//or u can write it as 
+//const user = new User( firstName : "riddhi",
+     //   lastName:"tripathi",
+      //  emailID:"riddhi001@gmail.com",
+      //  password :"123445575690",);
+
+connectionDB().then(()=>
+    { console.log("datase conneted");
+        app.listen(3000,(req,res)=>
+            {
+            console.log("hi from server");
+        
+        });
+
+}).catch((err)=>{
+    console.error("database cannot be connected")
+});
+/*
 app.use("/hello",(req,res)=>
 {
     res.send("helllo heloooo")
@@ -46,9 +84,5 @@ app.delete("/hello",(req,res)=>
     {
         res.send("deleted data from the data base");
     });
-    
-app.listen(3000,(req,res)=>
-    {
-    console.log("hi from server");
+    */
 
-})
